@@ -4,5 +4,6 @@ from website.views import *
 
 urlpatterns = [
     path('home', index_view),
-    path('json-test', json_test)
+    path('about', about_view),
+    path('contact', contact_view)
 ]
