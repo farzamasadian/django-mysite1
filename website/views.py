@@ -3,6 +3,7 @@ from django.http import HttpResponse
 
 def index_view(request):
     return render(request, 'website/index.html')
+
 def about_view(request):
     return render(request, 'website/about.html')
 
