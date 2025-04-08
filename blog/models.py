@@ -24,5 +24,9 @@ class Post(models.Model):
         ordering = ['created_date']
         # verbose_name = 'پست'
         # verbose_name_plural = 'پست ها'
+        
     def __str__(self):
         return f"{self.id} - {self.title}"
+
+    # def snippets(self):
+    #     return self.content[:100] + ' ...'

@@ -93,7 +93,10 @@
 				<div class="single-post row">
 					<div class="col-lg-3  col-md-3 meta-details">
 						<ul class="tags">
-							{{post.category.all | join:", "}}
+
+							{% for cat in post.category.all %}
+							<a href="#">{{cat.name}}</a> {% if not forloop.last %}, {% endif %}
+							{% endfor %}
 
 						</ul>
 						<div class="user-details row">
@@ -118,7 +121,7 @@
 							<h3>{{post.title}}</h3>
 						</a>
 						<p class="excert">
-							{{post.content}}
+							{{post.content|truncatechars:100}}
 						</p>
 						<a href="{% url 'blog:single' pid=post.id %}" class="primary-btn">View More</a>
 					</div>
