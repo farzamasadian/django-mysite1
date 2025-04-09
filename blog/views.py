@@ -4,7 +4,7 @@ from blog.models import Post
 
 # Create your views here.
 def blog_view(request):
-    posts = Post.objects.filter(status=1, published_date__lte = timezone.now()).order_by('published_date')
+    posts = Post.objects.filter(status=1, published_date__lte = timezone.now()).order_by('-published_date')
     
     context = {'posts' : posts}
     return render(request, 'blog/blog-home.html', context)
@@ -17,7 +17,7 @@ def blog_single(request, pid):
     post.save(update_fields=['counted_views'])
 
     # Create a list of all of the posts
-    posts = Post.objects.filter(status=1, published_date__lte = timezone.now()).order_by('published_date')
+    posts = Post.objects.filter(status=1, published_date__lte = timezone.now()).order_by('-published_date')
     post_list = list(posts)
     current_index = post_list.index(post)
 
