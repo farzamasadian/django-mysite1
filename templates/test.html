@@ -10,7 +10,16 @@
 </head>
 
 <body>
-    <p>Test: {% hello %}</p>
+    <p>Test: {% totalposts %}</p>
+    <p>Test: {% posts %}</p>
+
+    <p> {% posts as tp %}
+        {% for post in tp %}
+    <p>{{post.content| snippet:50}}</p>
+    {% endfor %}
+
+    </p>
+
 </body>
 
 </html>
