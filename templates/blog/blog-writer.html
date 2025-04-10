@@ -3,9 +3,13 @@
 
 <div class="single-sidebar-widget user-info-widget">
     <img src="{% static 'img/blog/user-info.png' %}" alt="">
-    <a href="#">
+    {% if post.author %}
+    <a href="{% url 'blog:author' author_username=post.author.username %}">
         <h4>{{post.author.get_full_name}}</h4>
     </a>
+    {% else %}
+    <h4>Unknown Author</h4>
+    {% endif %}
     <p>
         Senior blog writer
     </p>
