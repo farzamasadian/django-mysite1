@@ -23,6 +23,11 @@ def latest_posts(arg=3):
     posts = Post.objects.filter(status=1).order_by('-published_date')[:arg]
     return {'posts': posts}
 
+@register.inclusion_tag('blog/blog-latest-posts-horizontal.html')
+def latest_posts_horizontal(arg=6):
+    posts = Post.objects.filter(status=1).order_by('-published_date')[:arg]
+    return {'posts': posts}
+
 @register.inclusion_tag('blog/blog-category.html')
 def post_category():
     posts = Post.objects.filter(status=1)
