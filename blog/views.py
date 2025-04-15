@@ -48,7 +48,7 @@ def blog_single(request, pid):
 
 
 def blog_search(request):
-    posts = Post.objects.filter(status=1)
+    posts = Post.objects.filter(status=1, published_date__lte = timezone.now())
     if request.method == 'GET':
         if s:= request.GET.get('s'):    # walrus operator
             posts = posts.filter(content__contains=s)

@@ -1,5 +1,6 @@
 from django import template
 from blog.models import Post, Category
+from django.utils import timezone
 
 register = template.Library()
 
@@ -20,12 +21,12 @@ def snippet(value, arg=20):
 
 @register.inclusion_tag('blog/blog-latest-posts.html')
 def latest_posts(arg=3):
-    posts = Post.objects.filter(status=1).order_by('-published_date')[:arg]
+    posts = Post.objects.filter(status=1, published_date__lte = timezone.now()).order_by('-published_date')[:arg]
     return {'posts': posts}
 
 @register.inclusion_tag('blog/blog-latest-posts-horizontal.html')
 def latest_posts_horizontal(arg=6):
-    posts = Post.objects.filter(status=1).order_by('-published_date')[:arg]
+    posts = Post.objects.filter(status=1, published_date__lte = timezone.now()).order_by('-published_date')[:arg]
     return {'posts': posts}
 
 @register.inclusion_tag('blog/blog-category.html')
