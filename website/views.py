@@ -21,3 +21,17 @@ def contact_view(request):
     Renders the 'Contact Us' page.
     """
     return render(request, 'website/contact.html')
+
+# View for the test page (test.html)
+def test_view(request):
+    """
+    Renders a test template (used for development/testing purposes).
+
+    Template:
+        test.html
+    """
+    if request.method == 'POST':
+
+        print(request.POST.get('name'))
+    
+    return render(request, 'test.html')

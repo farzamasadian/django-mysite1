@@ -6,23 +6,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Test</title>
+    <title> Form Test</title>
 </head>
 
 <body>
-    <p>Test: {% totalposts %}</p>
-    <p>Test: {% posts %}</p>
+    <form action="{% url 'website:test' %}" method="post">
+        {% csrf_token %}
+        <label> name </label>
+        <input name="name" , type="text">
+        <button type="submit">submit</button>
+        <label> email </label>
+        <input name="email" , type="email">
+        <button type="submit">submit</button>
+        <label> subject </label>
+        <input name="subject" , type="text">
+        <button type="submit">submit</button>
 
-    <p> {% posts as tp %}
-        {% for post in tp %}
-    <p>{{post.content| snippet:50}}</p>
-    {% endfor %}
-
-    </p>
-    <p>
-        Test 2 : {% latest_posts %}
-    </p>
-
+    </form>
 </body>
 
 </html>
