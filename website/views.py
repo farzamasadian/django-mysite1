@@ -22,7 +22,12 @@ def contact_view(request):
     """
     Renders the 'Contact Us' page.
     """
-    return render(request, 'website/contact.html')
+    if request.method == 'POST':
+        form = ContactForm(data = request.POST)
+        if form.is_valid():
+            form.save()
+    form = ContactForm()
+    return render(request, 'website/contact.html', {'form':form})
 
 # View for the test page (test.html)
 def test_view(request):
