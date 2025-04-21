@@ -133,8 +133,7 @@
                             output.
                         </p>
                         <div>
-                            <form target="_blank" action="{% url 'website:newsletter' %}" method="post"
-                                class="subscription relative">
+                            <form action="{% url 'website:newsletter' %}" method="post" class="subscription relative">
                                 {% csrf_token %}
                                 <div class="input-group d-flex flex-row">
                                     <input name="email" placeholder="Email Address" onfocus="this.placeholder = ''"
@@ -144,6 +143,33 @@
                                 </div>
                                 <div class="mt-10 info"></div>
                             </form>
+                            {% if messages %}
+                            {% for message in messages %}
+                            {% if 'newsletter' in message.tags %}
+                            <div class="alert {% if message.tags %} alert-{{ message.tags }}{% endif %}">
+                                {{message|safe}}
+                            </div>
+                            {% endif %}
+                            {% endfor %}
+                            {% endif %}
+
+                            {% if form.errors %}
+                            <div class="alert alert-error">
+                                <h4>Please fix the following errors</h4>
+                                <ul>
+                                    {% for field in form %}
+                                    {% if field.errors %}
+                                    {% for error in field.errors %}
+                                    <li><a href="#id_{{ field.name }}" class="error">{{ error|escape }}</a></li>
+                                    {% endfor %}
+                                    {% endif %}
+                                    {% endfor %}
+                                </ul>
+                                {% if form.non_field_errors %}
+                                {{ form.non_field_errors }}
+                                {% endif %}
+                            </div>
+                            {% endif %}
                         </div>
                     </div>
                 </div>
@@ -169,8 +195,8 @@
                     <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
                     Copyright &copy;
                     <script>document.write(new Date().getFullYear());</script> All rights reserved | This template is
-                    made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com"
-                        target="_blank">Colorlib</a>
+                    made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a
+                        href="https://colorlib.com">Colorlib</a>
                     <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
                 </p>
                 <div class="col-lg-4 col-sm-12 footer-social">

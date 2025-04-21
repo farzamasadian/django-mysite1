@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
+from django.contrib import messages
 from website.models import Contact
 from .forms import NameForm, ContactForm, NewsletterForm
 
@@ -20,23 +21,36 @@ def about_view(request):
 # View for the Contact page (contact.html)
 def contact_view(request):
     """
-    Renders the 'Contact Us' page.
+    Handle GET and POST requests for the contact page.
+    - Displays a form for users to contact.
+    - If submitted and valid, saves the data and redirects to the same page.
     """
     if request.method == 'POST':
         form = ContactForm(data = request.POST)
         if form.is_valid():
             form.save()
+            messages.add_message(request=request, level=messages.SUCCESS, extra_tags='contact',message='Your ticket submitted successfully')
+            return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
+        else:
+            messages.add_message(request=request, level=messages.ERROR,extra_tags='contact', message='Your ticket didn\'t submit successfully')
+            return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
     form = ContactForm()
     return render(request, 'website/contact.html', {'form':form})
 
 def newsletter_view(request):
+    """
+    Handle newsletter form submissions from any page.
+    - Keeps the user on the same page.
+    """
     if request.method == 'POST':
         form = NewsletterForm(data=request.POST)
         if form.is_valid():
             form.save()
-            return HttpResponseRedirect('/')
-    elif request.method == 'GET':
-        return HttpResponseRedirect('/')
+            messages.add_message(request=request, level=messages.SUCCESS,extra_tags='newsletter', message='Your ticket submitted successfully')
+            return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
+    else:
+        messages.add_message(request=request, level=messages.ERROR,extra_tags='newsletter', message='Your ticket didn\'t submit successfully')
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
     form = NewsletterForm()
     
 # View for the test page (test.html)
