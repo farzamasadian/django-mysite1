@@ -1,7 +1,7 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from website.models import Contact
-from .forms import NameForm, ContactForm
+from .forms import NameForm, ContactForm, NewsletterForm
 
 # View for the home page (index.html)
 def index_view(request):
@@ -29,6 +29,16 @@ def contact_view(request):
     form = ContactForm()
     return render(request, 'website/contact.html', {'form':form})
 
+def newsletter_view(request):
+    if request.method == 'POST':
+        form = NewsletterForm(data=request.POST)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect('/')
+    elif request.method == 'GET':
+        return HttpResponseRedirect('/')
+    form = NewsletterForm()
+    
 # View for the test page (test.html)
 def test_view(request):
     """
@@ -48,3 +58,6 @@ def test_view(request):
     form = ContactForm()
             
     return render(request, 'test.html', {'form':form})
+
+
+    
