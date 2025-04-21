@@ -7,7 +7,7 @@ class Contact(models.Model):
 
     name = models.CharField(max_length=255)  # User's full name
     email = models.EmailField()              # User's email address
-    subject = models.CharField(max_length=255)  # Subject of the message
+    subject = models.CharField(max_length=255, blank=True, null=True)  # Subject of the message
     message = models.TextField()             # Message content
     created_date = models.DateTimeField(auto_now_add=True)  # Timestamp when message was created
     updated_date = models.DateTimeField(auto_now=True)      # Timestamp when message was last updated

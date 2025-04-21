@@ -28,14 +28,20 @@ def contact_view(request):
     if request.method == 'POST':
         form = ContactForm(data = request.POST)
         if form.is_valid():
-            form.save()
+            contact = form.save(commit=False)
+            contact.name = "Unknown"
+            contact.save()
             messages.add_message(request=request, level=messages.SUCCESS, extra_tags='contact',message='Your ticket submitted successfully')
             return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
         else:
             messages.add_message(request=request, level=messages.ERROR,extra_tags='contact', message='Your ticket didn\'t submit successfully')
-            return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
+            return render(request, 'website/contact.html', {'form':form})
+
     form = ContactForm()
     return render(request, 'website/contact.html', {'form':form})
+
+from django.shortcuts import redirect
+from django.contrib import messages
 
 def newsletter_view(request):
     """
@@ -47,14 +53,17 @@ def newsletter_view(request):
         if form.is_valid():
             form.save()
             messages.success(request, 'You subscribed successfully!', extra_tags='newsletter')
-            return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
+            return redirect(request.META.get('HTTP_REFERER', '/'))
+        else:
+            error_message = "There was a problem with your subscription:"
+            for field, errors in form.errors.items():
+                for error in errors:
+                    error_message += f" {field.capitalize()}: {error}"
+            messages.error(request, error_message, extra_tags='newsletter-error')
+            return redirect(request.META.get('HTTP_REFERER', '/'))
 
-    else:
-        messages.error(request, 'There was a problem with your submission.', extra_tags='newsletter')
-        return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
-    
-    return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))   
- 
+    return redirect(request.META.get('HTTP_REFERER', '/'))
+
 # View for the test page (test.html)
 def test_view(request):
     """

@@ -65,7 +65,7 @@
 						<div class="col-lg-6 form-group">
 							<input name="name" placeholder="Enter your name" onfocus="this.placeholder = ''"
 								onblur="this.placeholder = 'Enter your name'" class="common-input mb-20 form-control"
-								required="" type="text">
+								type="text">
 
 							<input name="email" placeholder="Enter email address"
 								pattern="[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{1,63}$"
@@ -74,7 +74,7 @@
 
 							<input name="subject" placeholder="Enter subject" onfocus="this.placeholder = ''"
 								onblur="this.placeholder = 'Enter subject'" class="common-input mb-20 form-control"
-								required="" type="text">
+								type="text">
 						</div>
 						<div class="col-lg-6 form-group">
 							<textarea class="common-textarea form-control" name="message" placeholder="Enter Messege"
@@ -89,31 +89,16 @@
 						</div>
 					</div>
 				</form>
-				{% if messages %}
-				{% for message in messages %}
+				<!-- {% for message in messages %}
 				{% if 'contact' in message.tags %}
-				<div class="alert {% if message.tags %} alert-{{ message.tags }}{% endif %}">{{ message|safe }}</div>
-				{% endif %}
-				{% endfor %}
-				{% endif %}
-
-				{% if form.errors %}
-				<div class="alert alert-error">
-					<h4>Please fix the following errors</h4>
-					<ul>
-						{% for field in form %}
-						{% if field.errors %}
-						{% for error in field.errors %}
-						<li><a href="#id_{{ field.name }}" class="error">{{ error|escape }}</a></li>
-						{% endfor %}
-						{% endif %}
-						{% endfor %}
-					</ul>
-					{% if form.non_field_errors %}
-					{{ form.non_field_errors }}
-					{% endif %}
+				<div id="popup-message" class="mfp-hide">
+					<div class="alert alert-{{ message.level_tag }}">
+						{{ message|safe }}
+					</div>
 				</div>
 				{% endif %}
+				{% endfor %} -->
+
 			</div>
 		</div>
 	</div>

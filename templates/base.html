@@ -31,6 +31,9 @@
     <link rel="stylesheet" href="{% static 'css/animate.min.css' %}">
     <link rel="stylesheet" href="{% static 'css/owl.carousel.css' %}">
     <link rel="stylesheet" href="{% static 'css/main.css' %}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+
+
 </head>
 
 <body>
@@ -83,6 +86,130 @@
             </div>
         </div>
     </header><!-- #header -->
+
+    <style>
+        .popup-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+        }
+
+        .popup-box {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            width: 90%;
+            max-width: 500px;
+            position: relative;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .popup-close {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 24px;
+            cursor: pointer;
+            border: none;
+            background: none;
+            padding: 0;
+            line-height: 1;
+            opacity: 0.7;
+            transition: opacity 0.2s ease-in-out;
+        }
+
+        .popup-close:hover {
+            opacity: 1;
+        }
+
+        .popup-text {
+            margin: 0;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .alert-error {
+            color: #a94442;
+            background-color: #f2dede;
+            padding: 1rem;
+            border-radius: 5px;
+            margin-top: 1rem;
+            border: 1px solid #ebccd1;
+        }
+
+        .alert-success {
+            color: #3c763d;
+            background-color: #dff0d8;
+            padding: 1rem;
+            border-radius: 5px;
+            margin-top: 1rem;
+            border: 1px solid #d6e9c6;
+        }
+    </style>
+    <script>
+        function closePopup() {
+            const popup = document.getElementById('popup-message');
+            if (popup) {
+                popup.classList.add('hidden');
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const popup = document.getElementById('popup-message');
+            if (popup) {
+                const newsletterError = popup.querySelector('.alert-newsletter-error');
+                const newsletterSuccess = popup.querySelector('.alert-newsletter.alert-success');
+                const contactMessages = popup.querySelectorAll('.alert-contact');
+                const formErrors = popup.querySelector('.alert-error'); // For contact form errors
+
+                if (newsletterError || newsletterSuccess || contactMessages.length > 0 || formErrors) {
+                    popup.classList.remove('hidden');
+                }
+            }
+        });
+    </script>
+    <div id="popup-message" class="popup-container hidden">
+        <div class="popup-box">
+            <button class="popup-close" onclick="closePopup()">&times;</button>
+            {% if messages %}
+            {% for message in messages %}
+            <div class="popup-content alert-{{ message.tags }}">
+                <p class="popup-text">{{ message|safe }}</p>
+            </div>
+            {% endfor %}
+            {% endif %}
+
+            {% if form.errors %}
+            <div class="alert alert-error">
+                <h4>Please fix the following errors</h4>
+                <ul>
+                    {% for field in form %}
+                    {% if field.errors %}
+                    {% for error in field.errors %}
+                    <li>{{ error|escape }} ({{ field.label }})</li>
+                    {% endfor %}
+                    {% endif %}
+                    {% endfor %}
+                </ul>
+                {% if form.non_field_errors %}
+                <p>{{ form.non_field_errors }}</p>
+                {% endif %}
+            </div>
+            {% endif %}
+        </div>
+    </div>
+
+
+
 
     {% block content %}
 
@@ -143,7 +270,7 @@
                                 </div>
                                 <div class="mt-10 info"></div>
                             </form>
-                            {% if messages %}
+                            <!-- {% if messages %}
                             {% for message in messages %}
                             {% if 'newsletter' in message.tags %}
                             <div class="alert alert-{{ message.level_tag }}">
@@ -151,25 +278,9 @@
                             </div>
                             {% endif %}
                             {% endfor %}
-                            {% endif %}
+                            {% endif %} -->
 
-                            {% if form.errors %}
-                            <div class="alert alert-error">
-                                <h4>Please fix the following errors</h4>
-                                <ul>
-                                    {% for field in form %}
-                                    {% if field.errors %}
-                                    {% for error in field.errors %}
-                                    <li><a href="#id_{{ field.name }}" class="error">{{ error|escape }}</a></li>
-                                    {% endfor %}
-                                    {% endif %}
-                                    {% endfor %}
-                                </ul>
-                                {% if form.non_field_errors %}
-                                {{ form.non_field_errors }}
-                                {% endif %}
-                            </div>
-                            {% endif %}
+
                         </div>
                     </div>
                 </div>
@@ -224,6 +335,8 @@
     <script src="{% static 'js/owl.carousel.min.js' %}"></script>
     <script src="{% static 'js/mail-script.js' %}"></script>
     <script src="{% static 'js/main.js' %}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+
 </body>
 
 </html>
