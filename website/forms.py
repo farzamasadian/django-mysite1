@@ -36,3 +36,9 @@ class NewsletterForm(forms.ModelForm):
     class Meta:
         model = Newsletter
         fields = '__all__'
+
+    def clean_email(self):
+        email = self.cleaned_data['email']
+        if Newsletter.objects.filter(email=email).exists():
+            raise forms.ValidationError("This email is already subscribed.")
+        return email

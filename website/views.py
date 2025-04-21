@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib import messages
 from website.models import Contact
@@ -46,13 +46,15 @@ def newsletter_view(request):
         form = NewsletterForm(data=request.POST)
         if form.is_valid():
             form.save()
-            messages.add_message(request=request, level=messages.SUCCESS,extra_tags='newsletter', message='Your ticket submitted successfully')
+            messages.success(request, 'You subscribed successfully!', extra_tags='newsletter')
             return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
+
     else:
-        messages.add_message(request=request, level=messages.ERROR,extra_tags='newsletter', message='Your ticket didn\'t submit successfully')
+        messages.error(request, 'There was a problem with your submission.', extra_tags='newsletter')
         return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
-    form = NewsletterForm()
     
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))   
+ 
 # View for the test page (test.html)
 def test_view(request):
     """
