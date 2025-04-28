@@ -1,4 +1,5 @@
 from django import forms
+from captcha.fields import CaptchaField
 from website.models import Contact, Newsletter
 
 class NameForm(forms.Form):
@@ -26,6 +27,7 @@ class ContactForm(forms.ModelForm):
     Automatically creates fields based on the model definition.
     Useful for rendering forms tied directly to the database.
     """
+    captcha = CaptchaField()
 
     class Meta:
         model = Contact  # The model associated with this form
