@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'django_extensions',
     'robots' ,
     'debug_toolbar',
+    'taggit',
     'website',
     'blog'
 ]
@@ -53,6 +54,9 @@ SITE_ID = 2
 # robots
 ROBOTS_USE_HOST = False
 ROBOTS_USE_SITEMAP = False
+
+# taggit
+TAGGIT_CASE_INSENSITIVE = True
 
 
 MIDDLEWARE = [

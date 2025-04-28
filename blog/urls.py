@@ -14,6 +14,9 @@ urlpatterns = [
     # Filter posts by category name
     path('category/<str:cat_name>', blog_view, name='category'),
 
+    # Filter posts by tag name
+    path('tag/<str:tag_name>', blog_view, name='tag'),
+
     # Filter posts by author username
     path('author/<str:author_username>', blog_view, name='author'),
 
