@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'robots' ,
     'debug_toolbar',
     'taggit',
+    'django_summernote', 
     'website',
     'blog'
 ]
@@ -57,6 +58,26 @@ ROBOTS_USE_SITEMAP = False
 
 # taggit
 TAGGIT_CASE_INSENSITIVE = True
+
+# summernote
+SUMMERNOTE_THEME = 'bs4'  # Show summernote with Bootstrap4
+SUMMERNOTE_CONFIG = {
+    # Using SummernoteWidget - iframe mode, default
+    'iframe': True,
+
+    # You can put custom Summernote settings
+    'summernote': {
+        # As an example, using Summernote Air-mode
+        'airMode': False,
+
+        # Change editor size
+        'width': '900',
+        'height': '480',
+
+        # Toolbar customization
+        # https://summernote.org/deep-dive/#custom-toolbar-popover
+    },
+}
 
 
 MIDDLEWARE = [
@@ -156,3 +177,5 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 INTERNAL_IPS = [
     "127.0.0.1",
 ]
+
+X_FRAME_OPTIONS = 'SAMEORIGIN'
