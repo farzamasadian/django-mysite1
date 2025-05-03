@@ -2,6 +2,9 @@ from django.shortcuts import render, get_object_or_404
 from django.utils import timezone
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage, InvalidPage
 from blog.models import Post, Comment
+from blog.forms import CommentForm
+from django.shortcuts import redirect
+from django.contrib import messages
 
 
 def blog_view(request, **kwargs):
@@ -63,6 +66,20 @@ def blog_single(request, pid):
         prev_post (Post | None): The previous blog post, if it exists.
         next_post (Post | None): The next blog post, if it exists.
     """
+    if request.method == 'POST':
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'comment submitted successfully!', extra_tags='comment')
+            return redirect(request.META.get('HTTP_REFERER', '/'))
+        else:
+            error_message = "There was a problem with your comment:"
+            for field, errors in form.errors.items():
+                for error in errors:
+                    error_message += f" {field.capitalize()}: {error}"
+            messages.error(request, error_message, extra_tags='comment-error')
+            return redirect(request.META.get('HTTP_REFERER', '/'))
+        
     # Retrieve the post or return 404 if not found or unpublished
     post = get_object_or_404(Post, pk=pid, status=1, published_date__lte=timezone.now())
     comments = Comment.objects.filter(post = post.id, approved=True)
@@ -79,11 +96,13 @@ def blog_single(request, pid):
     prev_post = post_list[current_index - 1] if current_index > 0 else None
     next_post = post_list[current_index + 1] if current_index < len(post_list) - 1 else None
 
+    form = CommentForm()
     context = {
         'post': post,
         'prev_post': prev_post,
         'next_post': next_post,
-        'comments' : comments
+        'comments' : comments,
+        'form' : form
     }
     return render(request, 'blog/blog-single.html', context)
 

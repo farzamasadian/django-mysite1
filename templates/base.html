@@ -170,8 +170,12 @@
                 const newsletterSuccess = popup.querySelector('.alert-newsletter.alert-success');
                 const contactMessages = popup.querySelectorAll('.alert-contact');
                 const formErrors = popup.querySelector('.alert-error'); // For contact form errors
+                const commentError = popup.querySelector('.alert-comment-error');
+                // Modified selector for comment success
+                const commentSuccess = popup.querySelector('.alert.alert-success.comment');
 
-                if (newsletterError || newsletterSuccess || contactMessages.length > 0 || formErrors) {
+
+                if (newsletterError || newsletterSuccess || contactMessages.length > 0 || formErrors || commentError || commentSuccess) {
                     popup.classList.remove('hidden');
                 }
             }
