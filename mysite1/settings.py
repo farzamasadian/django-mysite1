@@ -48,7 +48,8 @@ INSTALLED_APPS = [
     'django_summernote', 
     'captcha',
     'website',
-    'blog'
+    'blog',
+    'accounts'
 ]
 
 # captcha admin settings
