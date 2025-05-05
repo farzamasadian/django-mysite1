@@ -176,15 +176,21 @@
                 const contactMessages = popup.querySelectorAll('.alert-contact');
                 const formErrors = popup.querySelector('.alert-error'); // For contact form errors
                 const commentError = popup.querySelector('.alert-comment-error');
-                // Modified selector for comment success
                 const commentSuccess = popup.querySelector('.alert.alert-success.comment');
+                const loginSuccess = popup.querySelector('.alert-login-success.alert-success');
+                const loginError = popup.querySelector('.alert-login-error.alert-error');
+                const signupSuccess = popup.querySelector('.alert-signup-success.alert-success');
+                const logoutSuccess = popup.querySelector('.alert-logout-success.alert-info'); // Using alert-info for logout
 
 
-                if (newsletterError || newsletterSuccess || contactMessages.length > 0 || formErrors || commentError || commentSuccess) {
+                if (newsletterError || newsletterSuccess || contactMessages.length > 0 || formErrors || commentError || commentSuccess || loginSuccess || loginError || signupSuccess || logoutSuccess) {
                     popup.classList.remove('hidden');
                 }
             }
         });
+        if (loginSuccess) {
+            popup.classList.remove('hidden');
+        }
     </script>
     <div id="popup-message" class="popup-container hidden">
         <div class="popup-box">
