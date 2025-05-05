@@ -27,6 +27,7 @@ class Post(models.Model):
     tags = TaggableManager()
     counted_views = models.IntegerField(default=0)  # Number of times the post has been viewed
     status = models.BooleanField(default=False)  # Published status (True = published)
+    login_required = models.BooleanField(default=False)  # login required status (True = only logged in users can see this)
     created_date = models.DateTimeField(auto_now_add=True)  # Automatically set when the post is created
     updated_date = models.DateTimeField(auto_now=True)  # Automatically set when the post is updated
     published_date = models.DateTimeField(null=True)  # Date and time when the post is published

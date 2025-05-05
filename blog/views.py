@@ -1,10 +1,11 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.utils import timezone
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage, InvalidPage
 from blog.models import Post, Comment
 from blog.forms import CommentForm
-from django.shortcuts import redirect
+from django.urls import reverse
 from django.contrib import messages
+from django.http import HttpResponseRedirect
 
 
 def blog_view(request, **kwargs):

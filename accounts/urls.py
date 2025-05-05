@@ -7,7 +7,7 @@ app_name = 'accounts'
 
 # URL patterns for the website app
 urlpatterns = [
-    path('login', login_view, name='login'),
-    path('logout', logout_view, name='logout'),
-    path('signup', signup_view, name='signup')
+    path('login/', login_view, name='login'),
+    path('logout/', logout_view, name='logout'),
+    path('signup/', signup_view, name='signup')
 ]
