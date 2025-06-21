@@ -52,6 +52,12 @@ INSTALLED_APPS = [
     'accounts'
 ]
 
+AUTHENTICATION_BACKENDS = [
+    'accounts.backends.EmailOrUsernameBackend',
+    'django.contrib.auth.backends.ModelBackend',
+]
+
+
 # captcha admin settings
 MULTI_CAPTCHA_ADMIN = {
     'engine': 'simple-captcha',
@@ -182,8 +188,19 @@ STATICFILES_DIRS = [
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+# Custom Authentication Backends
+AUTHENTICATION_BACKENDS = [
+    'accounts.backends.EmailOrUsernameBackend',
+    'django.contrib.auth.backends.ModelBackend',
+]
+
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/'
+
 INTERNAL_IPS = [
     "127.0.0.1",
 ]
 
 X_FRAME_OPTIONS = 'SAMEORIGIN'
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'

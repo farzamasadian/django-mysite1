@@ -3,6 +3,8 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from .forms import CustomUserCreationForm
+import inspect
 
 def login_view(request):
     if not request.user.is_authenticated:
@@ -32,17 +34,20 @@ def logout_view(request):
 def signup_view(request):
     if not request.user.is_authenticated:
         if request.method == 'POST':
-            form = UserCreationForm(request.POST)
+            print("The CustomUserCreationForm is being loaded from this file:", inspect.getfile(CustomUserCreationForm))
+            form = CustomUserCreationForm(request.POST)
             if form.is_valid():
                 user = form.save()
                 username = form.cleaned_data.get('username')
                 messages.success(request, f'Account created successfully for {username}! Please log in.', extra_tags='signup-success')
-                return redirect('/accounts/login') # Redirect to login after signup
+                return redirect('/accounts/login')
             else:
-                context = {'form': form}
-                return render(request, 'accounts/signup.html', context=context) # Re-render with errors
+                print("Form is not valid. Errors:", form.errors)
 
-        form = UserCreationForm()
+                context = {'form': form}
+                return render(request, 'accounts/signup.html', context)
+
+        form = CustomUserCreationForm()
         context = {'form': form}
         return render(request, 'accounts/signup.html', context=context)
     else:

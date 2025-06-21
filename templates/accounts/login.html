@@ -6,13 +6,10 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
+    <title>Log In</title>
     <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700&display=swap" rel="stylesheet">
-
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-
     <link rel="stylesheet" href="{% static 'css/login.css' %}">
-
 </head>
 
 <body>
@@ -34,20 +31,30 @@
                                 </div>
                                 <div class="w-100">
                                     <p class="social-media d-flex justify-content-end">
-                                        <a href="index.html#"
+                                        <a href="#"
                                             class="social-icon d-flex align-items-center justify-content-center"><span
                                                 class="fa fa-facebook"></span></a>
-                                        <a href="index.html#"
+                                        <a href="#"
                                             class="social-icon d-flex align-items-center justify-content-center"><span
                                                 class="fa fa-twitter"></span></a>
                                     </p>
                                 </div>
                             </div>
+                            {% if messages %}
+                            {% for message in messages %}
+                            <div class="alert alert-danger p-2 text-center" role="alert"
+                                style="font-size: 0.9em; color: white; background-color: #dc3545; border-color: #dc3545; border-radius: 5px;">
+                                {{ message }}
+                            </div>
+                            {% endfor %}
+                            {% endif %}
                             <form method="post" action="{% url 'accounts:login' %}" class="signin-form">
                                 {% csrf_token %}
+                                <input type="hidden" name="next" value="{{ request.GET.next }}">
+
                                 <div class="form-group mt-3">
                                     <input type="text" class="form-control" required name="username">
-                                    <label class="form-control-placeholder" for="username">Username</label>
+                                    <label class="form-control-placeholder" for="username">Username or Email</label>
                                 </div>
                                 <div class="form-group">
                                     <input id="password-field" type="password" class="form-control" required
@@ -68,7 +75,7 @@
                                         </label>
                                     </div>
                                     <div class="w-50 text-md-right">
-                                        <a href="index.html#">Forgot Password</a>
+                                        <a href="{% url 'password_reset' %}">Forgot Password</a>
                                     </div>
                                 </div>
                             </form>

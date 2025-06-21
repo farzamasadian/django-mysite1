@@ -27,6 +27,7 @@
                 <div class="col-md-7 col-lg-5">
                     <div class="wrap">
                         <div class="img" style="background-image: url({% static 'img/bg-1.jpg' %});"></div>
+
                         <div class="login-wrap p-4 p-md-5">
                             <div class="d-flex">
                                 <div class="w-100">
@@ -43,41 +44,68 @@
                                     </p>
                                 </div>
                             </div>
+                            {% if messages %}
+                            {% for message in messages %}
+                            <div class="alert alert-danger p-2 text-center" role="alert"
+                                style="font-size: 0.9em; color: white; background-color: #dc3545; border-color: #dc3545; border-radius: 5px;">
+                                {{ message }}
+                            </div>
+                            {% endfor %}
+                            {% endif %}
                             <form method="post" action="{% url 'accounts:signup' %}" class="signin-form">
                                 {% csrf_token %}
+
+                                {% if form.non_field_errors %}
+                                <div class="alert alert-danger p-2" role="alert" style="font-size: 0.9em;">
+                                    {% for error in form.non_field_errors %}
+                                    {{ error }}
+                                    {% endfor %}
+                                </div>
+                                {% endif %}
+
                                 <div class="form-group mt-3">
-                                    <input type="text" class="form-control" required name="username">
+                                    <input type="text" name="username" class="form-control" required
+                                        value="{{ form.username.value|default_if_none:'' }}">
                                     <label class="form-control-placeholder" for="username">Username</label>
+                                    {% if form.username.errors %}
+                                    <small class="text-danger d-block mt-1">{{ form.username.errors|first }}</small>
+                                    {% endif %}
                                 </div>
+
+                                <div class="form-group mt-3">
+                                    <input type="email" name="email" class="form-control" required
+                                        value="{{ form.email.value|default_if_none:'' }}">
+                                    <label class="form-control-placeholder" for="email">Email</label>
+                                    {% if form.email.errors %}
+                                    <small class="text-danger d-block mt-1">{{ form.email.errors|first }}</small>
+                                    {% endif %}
+                                </div>
+
                                 <div class="form-group">
-                                    <input id="password-field" type="password" class="form-control" required
-                                        name="password1">
+                                    <input id="password-field1" type="password" name="password1" class="form-control"
+                                        required>
                                     <label class="form-control-placeholder" for="password1">Password</label>
-                                    <span toggle="#password-field"
+                                    <span toggle="#password-field1"
                                         class="fa fa-fw fa-eye field-icon toggle-password"></span>
+                                    {% if form.password.errors %}
+                                    <small class="text-danger d-block mt-1">{{ form.password.errors|first }}</small>
+                                    {% endif %}
                                 </div>
+
                                 <div class="form-group">
-                                    <input id="password-field" type="password" class="form-control" required
-                                        name="password2">
+                                    <input id="password-field2" type="password" name="password2" class="form-control"
+                                        required>
                                     <label class="form-control-placeholder" for="password2">Confirm Password</label>
-                                    <span toggle="#password-field"
+                                    <span toggle="#password-field2"
                                         class="fa fa-fw fa-eye field-icon toggle-password"></span>
+                                    {% if form.password2.errors %}
+                                    <small class="text-danger d-block mt-1">{{ form.password2.errors|first }}</small>
+                                    {% endif %}
                                 </div>
 
                                 <div class="form-group">
                                     <button type="submit" class="form-control btn btn-primary rounded submit px-3">Sign
                                         Up</button>
-                                </div>
-                                <div class="form-group d-md-flex">
-                                    <div class="w-50 text-left">
-                                        <label class="checkbox-wrap checkbox-primary mb-0">Remember Me
-                                            <input type="checkbox" checked>
-                                            <span class="checkmark"></span>
-                                        </label>
-                                    </div>
-                                    <!-- <div class="w-50 text-md-right">
-                                        <a href="index.html#">Forgot Password</a>
-                                    </div> -->
                                 </div>
                             </form>
                             <p class="text-center">Already have an account? <a href="{% url 'accounts:login' %}">Log
