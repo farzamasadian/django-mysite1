@@ -8,12 +8,10 @@
 # Core Framework
 Django==5.2
 
-# Database Driver (IMPORTANT: Add your specific driver here)
-# psycopg2-binary==2.9.9    # Example for PostgreSQL
-# mysqlclient==2.2.4      # Example for MySQL
+# Database Driver 
 
-# Web Server (Best practice to pin your production server)
-# gunicorn==22.0.0
+
+
 
 # Django Applications
 django-multi-captcha-admin==2.0.0
