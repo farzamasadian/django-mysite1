@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
 from pathlib import Path
+from decouple import config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -181,4 +182,30 @@ INTERNAL_IPS = [
 ]
 
 
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+# -----------------------------------------------------------------
+# EMAIL CONFIGURATION
+# -----------------------------------------------------------------
+
+# The email backend to use. For production, use SMTP.
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
+# Host for sending email.
+# For Gmail: 'smtp.gmail.com'
+EMAIL_HOST = 'smtp.gmail.com' 
+
+# Port for sending email.
+EMAIL_PORT = 587
+
+# Whether to use a TLS (secure) connection when talking to the SMTP server.
+EMAIL_USE_TLS = True
+
+# The email address to use for sending email.
+# Reads the value from .env file.
+EMAIL_HOST_USER = config('EMAIL_HOST_USER')
+
+# The password or API key to use for the email account.
+# Reads the value from .env file.
+EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
+
+# Default email address to use for various automated correspondence from the site manager(s).
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
