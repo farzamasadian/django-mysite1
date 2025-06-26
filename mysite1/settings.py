@@ -201,11 +201,16 @@ EMAIL_USE_TLS = True
 
 # The email address to use for sending email.
 # Reads the value from .env file.
-EMAIL_HOST_USER = config('EMAIL_HOST_USER')
+
+EMAIL_HOST_USER = 'f42730480@gmail.com'
+# EMAIL_HOST_USER = config('EMAIL_HOST_USER')
 
 # The password or API key to use for the email account.
 # Reads the value from .env file.
-EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
+EMAIL_HOST_PASSWORD='cbwg njvn ugww mmuk'
+# EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
 
 # Default email address to use for various automated correspondence from the site manager(s).
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
+
